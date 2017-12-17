@@ -2,6 +2,7 @@ package borsch.freelancing.pojo.entities;
 
 import borsch.freelancing.pojo.enums.ProjectStatusEnum;
 import borsch.freelancing.pojo.enums.SkillLevelEnum;
+import borsch.freelancing.pojo.helpers.GetableById;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,7 +12,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "PROJECTS")
-public class ProjectEntity {
+public class ProjectEntity implements GetableById<Integer> {
 
     @Id
     @GeneratedValue
@@ -22,9 +23,11 @@ public class ProjectEntity {
     private String name;
 
     @Column(name = "STATUS")
+    @Enumerated(EnumType.STRING)
     private ProjectStatusEnum status;
 
     @Column(name = "MIN_SKILL_LEVEL")
+    @Enumerated(EnumType.ORDINAL)
     private SkillLevelEnum minSkillLevel;
 
     @Column(name = "DEVELOPER_RATING")
@@ -33,9 +36,11 @@ public class ProjectEntity {
     @Column(name = "CLIENT_RATING")
     private float clientRating;
 
+    @ManyToOne
     @JoinColumn(name = "DEVELOPER_ID")
     private DeveloperEntity developer;
 
+    @ManyToOne
     @JoinColumn(name = "CLIENT_ID")
     private ClientEntity client;
 
@@ -43,12 +48,18 @@ public class ProjectEntity {
     @JoinTable(name = "TAGS_TO_PROJECTS", joinColumns = @JoinColumn(name = "PROJECT_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
     private Set<TagEntity> tags;
 
-    public int getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int compareId(int i) {
+        return ((Integer)id).compareTo(i);
     }
 
     public String getName() {

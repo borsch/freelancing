@@ -1,9 +1,11 @@
 package borsch.freelancing.services.users;
 
+import borsch.freelancing.convertors.UserConverter;
 import borsch.freelancing.criteria.Criteria;
 import borsch.freelancing.criteria.impl.UserCriteria;
 import borsch.freelancing.exceptions.BaseException;
 import borsch.freelancing.exceptions.bad_request.WrongPasswordException;
+import borsch.freelancing.exceptions.service_error.AuthRequiredException;
 import borsch.freelancing.persistence.dao.repositories.ClientRepository;
 import borsch.freelancing.persistence.dao.repositories.DeveloperRepository;
 import borsch.freelancing.persistence.dao.repositories.UsersRepository;
@@ -14,6 +16,7 @@ import borsch.freelancing.pojo.view.DeveloperView;
 import borsch.freelancing.services.clients.IClientService;
 import borsch.freelancing.services.developers.IDeveloperService;
 import borsch.freelancing.exceptions.bad_request.WrongRestrictionException;
+import borsch.freelancing.services.utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -55,6 +58,19 @@ public class UserServiceImpl extends IUserService {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private SessionUtils sessionUtils;
+
+    @Autowired
+    private UserConverter userConverter;
+
+    @Override
+    public Map<String, Object> getCurrentUser(Set<String> fields) throws AuthRequiredException {
+        sessionUtils.authorized();
+
+        return userConverter.convert(sessionUtils.getCurrentUser(), fields);
+    }
 
     @Override
     public UserEntity getByEmail(String email) throws NoSuchEntityException {

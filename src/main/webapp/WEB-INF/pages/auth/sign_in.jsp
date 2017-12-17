@@ -49,7 +49,7 @@
                 data: data,
                 success: function(response){
                     if (response.result) {
-                        location.href = '/';
+                        location.href = '/profile';
                     } else {
                         showErrorMessage(response.error);
                     }

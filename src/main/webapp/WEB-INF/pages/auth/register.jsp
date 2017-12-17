@@ -99,7 +99,7 @@
                         showSuccessMessage('Successfully registration');
 
                         setTimeout(function(){
-                            location.href = '/';
+                            location.href = '/profile';
                         }, 500);
                     } else {
                         showErrorMessage(response.error);

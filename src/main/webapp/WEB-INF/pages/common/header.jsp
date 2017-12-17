@@ -25,6 +25,7 @@
                                 <li><a href="/sign_in">Log in</a></li>
                             </security:authorize>
                             <security:authorize access="isAuthenticated()">
+                                <li><a href="/profile">Profile</a></li>
                                 <li><a id="logout" href="#">Log out</a></li>
                             </security:authorize>
                         </ul>

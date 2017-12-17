@@ -34,7 +34,7 @@ public abstract class BaseApiController<E extends GetableById<I>, V extends Geta
     Response<Map<String, Object>>
     get(
             @PathVariable("id") I id,
-            @RequestParam(value = "fields", required = false, defaultValue = Fields.InfoPage.DEFAULT) Set<String> fields
+            @RequestParam(value = "fields", required = false, defaultValue = Fields.DEFAULT) Set<String> fields
     ) throws BaseException {
         return responseFactory.get(service.getById(id, fields));
     }
@@ -45,7 +45,7 @@ public abstract class BaseApiController<E extends GetableById<I>, V extends Geta
     )
     public @ResponseBody Response<List<Map<String, Object>>>
     getList(
-            @RequestParam(value = "fields", required = false, defaultValue = Fields.InfoPage.DEFAULT) Set<String> fields,
+            @RequestParam(value = "fields", required = false, defaultValue = Fields.DEFAULT) Set<String> fields,
             @RequestParam(value = "restrict", required = false) String restrict
     ) throws BaseException {
         return responseFactory.get(service.getList(fields, restrict));

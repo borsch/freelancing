@@ -7,7 +7,7 @@
     <html>
     <head>
         <jsp:include page="../common/include_external_head_top.jsp" />
-        <title>Profile</title>
+        <title>I'm developing</title>
         <jsp:include page="../common/include_resources.jsp" />
     </head>
     <body>
@@ -15,17 +15,26 @@
     <jsp:include page="../common/header.jsp"/>
     <div class="container">
         <section>
-            <h1 class="col-xs-12">User Profile</h1>
+            <h1 class="col-xs-12">I'm developing</h1>
             <div class="clearfix"></div>
             <div class="col-sm-9 col-sm-push-3">
-                <div class="row">
-                    <p><strong>Developer skill level: </strong>${user.developer_skill_level}</p>
-                    <p><strong>Developer rating: </strong>${user.developer_rating}</p>
-                    <p><strong>Developer tags: </strong>${user.developer_tags}</p>
-                    <p><strong>Developer projects amount: </strong>${user.developer_projects_amount}</p>
-                    <p><strong>Client rating: </strong>${user.client_rating}</p>
-                    <p><strong>Client projects amount: </strong>${user.client_projects_amount}</p>
-                </div>
+                <c:choose>
+                    <c:when test="${projects ne null}">
+                        <c:forEach var="project" items="${projects}">
+                            <div class="row">
+                                <p><strong>Name: </strong>${project.name}</p>
+                                <p><strong>Status: </strong>${project.status}</p>
+                                <p><strong>Minimum skill level: </strong>${project.min_skill_level}</p>
+                                <p><strong>Project tags: </strong>${project.tags}</p>
+                                <p><strong>Developer rating: </strong>${project.developer_rating}</p>
+                                <p><strong>Client rating: </strong>${project.client_rating}</p>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        still no projects
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="col-sm-3 col-sm-pull-9">
                 <jsp:include page="user_menu.jsp" />
