@@ -1,0 +1,43 @@
+<div>
+    <div class="item-menu bg-pattern row">
+        <div class="col-sm-6 text-uppercase">
+            <%= menu.name %>
+        </div>
+        <div class="col-sm-6 text-right">
+            <button type="button" data-toggle="collapse" data-target="#menu_item<%= menu.id %>" class="btn btn-min btn-theme-ok">More</button>
+            <button type="button" class="show-hide btn btn-theme-ok">show / hide children</button>
+        </div>
+            <div class="clearfix"></div>
+        <div id="menu_item<%= menu.id %>" class="collapse">
+            <div class="col-sm-6"><br/>
+                <div><strong>Edit menu item</strong></div>
+                <div class="form-group">
+                    <label>Name:</label> <input value="<%= menu.name %>" data-menu="<%= menu.id %>" name="name" class="form-control">
+                    <label>Url:</label> <input value="<%= menu.url %>" data-menu="<%= menu.id %>" name="url" class="form-control">
+                </div><br/>
+                <div class="col-xs-6">
+                    <button type="button" class="update btn btn-min btn-theme-ok">Update</button>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <button type="button" class="delete btn btn-min btn-theme-dark">Delete</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="col-sm-6 add-submenu"><br/>
+                <div><strong>Add child menu item <!--to [<span class="name" data-menu="<%= menu.id %>"><%= menu.name %></span>]--></strong></div>
+                <div class="form-group">
+                    <label>Name:</label> <input name="menu_name_new" data-menu="<%= menu.id %>" class="form-control">
+                    <label>Url:</label> <input name="menu_url_new" data-menu="<%= menu.id %>" class="form-control">
+                </div><br/>
+                <div class="text-center">
+                    <button type="button" class="add-item btn btn-theme-ok">Add</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <ul class="list" data-menu="<%= menu.id %>">
+
+    </ul>
+</div>

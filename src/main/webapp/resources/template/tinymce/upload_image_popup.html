@@ -1,0 +1,47 @@
+<html>
+<body>
+<form id="image_upload">
+    <input type="file" name="file" accept="image/*">
+    <br />
+    file name for better search experience(not required): <input id="name" name="name">
+    <br />
+    <button type="submit">Upload</button>
+</form>
+
+<script src="/resources/js/jquery-3.1.0.min.js"></script>
+<script src="/resources/js/ajax.js"></script>
+<script src="/resources/js/utils/notification/alertify.min.js"></script>
+<link rel="stylesheet" href="/resources/js/utils/notification/css/alertify.min.css">
+<link rel="stylesheet" href="/resources/js/utils/notification/css/themes/default.min.css">
+<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+<script>
+    $('#name').inputmask('Regex', {
+        regex: "^([A-Za-z\\_\\-1-9]+)$"
+    });
+
+    $('#image_upload').submit(function(e){
+        e.preventDefault();
+        var file_input = $(this).find('[type=file]')[0],
+            name = $('#name').val();
+
+        Ajax.uploadFile(
+            '/api/file/images/',
+            {
+                file: file_input.files[0],
+                name: name
+            },
+            function(response){
+                if (response.result) {
+                    alertify.success('saved');
+                    setInterval(function(){
+                        top.tinymce.activeEditor.windowManager.close();
+                    }, 1500);
+                } else {
+                    alertify.error(response.error.message);
+                }
+            }
+        )
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<div class="item-comment">
+    <div class="col-xs-10 meta-info">
+        <strong><i class="fa fa-user" aria-hidden="true"></i><span class="user"></span></strong>
+        <span><i class="fa fa-calendar" aria-hidden="true"></i><%= new Date(date).format('dd/MM/yy HH:mm:ss') %></span>
+    </div>
+    <div class="col-xs-2 text-right meta-info">
+        <% if (has_file) { %>
+        <span class="file-block">
+            <a href="/api/file/<%= id %>?type=REQUEST_COMMENT" target="_blank" title="Download attached file"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
+        </span>
+        <% } %>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12"><%= text %></div>
+</div>

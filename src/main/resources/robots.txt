@@ -1,0 +1,10 @@
+User-agent: Googlebot
+Disallow: /admin*
+
+User-agent: *
+Disallow: /admin*
+
+Crawl-delay: 3
+Host: http://charlesworthbgs.com/
+
+Sitemap: http://charlesworthbgs.com/sitemap.xml

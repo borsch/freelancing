@@ -1,0 +1,35 @@
+<div class="modal" style="display: block;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sign in</h4>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <a href="https://www.facebook.com/v2.10/dialog/oauth?client_id=<%= SocialNetworks.Facebook.app_id %>&redirect_uri=<%= SocialNetworks.host %>/facebook_success&response_type=code%20token&scope=public_profile,email" class="col-xs-12 btn-theme btn-fb">
+                        <i class="fa fa-facebook" aria-hidden="true"></i>Login with FB
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+                <form id="sign_in_form">
+                    <div>
+                        <input type="email" name="email" placeholder="email" class="col-xs-12">
+                    </div>
+                    <div>
+                        <input type="password" name="password" placeholder="password" class="col-xs-12">
+                    </div>
+                    <div class="text-center"><button type="submit" class="btn-theme btn-1">Login</button></div>
+                </form>
+                <div class="clearfix"></div>
+                <div class="text-center">
+                    Forget password?
+                    <Br />
+                    <button class="btn-theme btn-2 recover-password">Recover password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shadow"></div>

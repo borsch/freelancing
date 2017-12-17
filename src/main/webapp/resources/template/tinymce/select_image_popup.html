@@ -1,0 +1,61 @@
+<html>
+<body>
+<link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+filter images by name: <input id="file_name">
+<div class="row" id="images_container" style="overflow: auto; max-height: 500px; max-width: 700px;">
+
+</div>
+
+<script src="/resources/js/jquery-3.1.0.min.js"></script>
+<script src="/resources/js/ajax.js"></script>
+<script>
+    Ajax.get({
+        url: '/api/file/images',
+        success: function(response) {
+            if (response.result) {
+                response.result.forEach(function(name){
+                    var html = '<div class="col-md-3 image-container" data-name="' + name + '"><img style="max-width: 200px; max-height: 200px;" src="/api/file/images/' + name + '" /><br/>link: ' +
+                        '<a target="_blank" href="/api/file/images/' + name + '">' +
+                        '/api/file/images/' + name +
+                        '</a><button class="copy-link">Copy</button></div>';
+
+                    $('#images_container').append(html);
+                });
+            } else {
+                alert('service error');
+            }
+        }
+    });
+
+    $('#file_name').keyup(function(){
+        var val = $(this).val().toLowerCase();
+
+        if (!val) {
+            $('#images_container .image-container').show();
+            return;
+        }
+
+        $('#images_container .image-container').each(function(){
+            var $self = $(this),
+                name = $(this).data('name').toLowerCase();
+
+            if (name.indexOf(val) > -1) {
+                $self.show();
+            } else {
+                $self.hide();
+            }
+        });
+    });
+
+    $('body').on('click', '.copy-link', function(){
+        var text = $(this).closest('.image-container').find('a').attr('href');
+        var input = document.createElement('input');
+        input.setAttribute('value', text);
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input)
+    })
+</script>
+</body>
+</html>
