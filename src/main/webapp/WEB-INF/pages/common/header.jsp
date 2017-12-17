@@ -20,6 +20,13 @@
                     <nav>
                         <ul class="topmenu">
                             <li id="home"><a href="/"><s:message code="navmenu.home"/></a></li>
+                            <security:authorize access="isAnonymous()">
+                                <li><a href="/register">Registration</a></li>
+                                <li><a href="/sign_in">Log in</a></li>
+                            </security:authorize>
+                            <security:authorize access="isAuthenticated()">
+                                <li><a id="logout" href="#">Log out</a></li>
+                            </security:authorize>
                         </ul>
                     </nav>
                 </div>

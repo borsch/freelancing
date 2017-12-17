@@ -51,13 +51,7 @@ public class UserValidateServiceImpl
             userService.getByEmail(user.getEmail());
             throw new EmailExistsException();
         } catch (NoSuchEntityException e) {
-            if (!sessionUtils.isAuthorized()){
-                if (user.getRoleEntity()==null || user.getRoleEntity().getName() != RolesEnum.user){
-                    throw new ServiceErrorException();
-                }
-            }else if (!sessionUtils.isUserWithRole(RolesEnum.admin)){
-                throw new ServiceErrorException();
-            }
+
         }
     }
 

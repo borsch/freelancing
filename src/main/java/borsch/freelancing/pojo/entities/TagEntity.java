@@ -1,13 +1,16 @@
 package borsch.freelancing.pojo.entities;
 
+import borsch.freelancing.pojo.helpers.GetableById;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by olehkurpiak on 17.12.2017.
  */
 @Entity
 @Table(name = "TAGS")
-public class TagEntity {
+public class TagEntity implements Serializable, GetableById<Integer> {
 
     @Id
     @GeneratedValue
@@ -17,12 +20,18 @@ public class TagEntity {
     @Column(name = "TAG")
     private String tag;
 
-    public int getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int compareId(int i) {
+        return ((Integer)id).compareTo(i);
     }
 
     public String getTag() {

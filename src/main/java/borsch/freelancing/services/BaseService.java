@@ -74,7 +74,9 @@ public abstract class BaseService<E extends GetableById<I>,V extends GetableById
         return entities;
     }
 
-    public abstract List<Map<String, Object>> getList(Set<String> fields, String restrict) throws BaseException;
+    public List<Map<String, Object>> getList(Set<String> fields, String restrict) throws BaseException {
+        return getList(parse(restrict), fields);
+    }
 
     @Override
     @Transactional(rollbackFor = BaseException.class)
@@ -107,7 +109,9 @@ public abstract class BaseService<E extends GetableById<I>,V extends GetableById
     }
 
     @Override
-    public abstract int count(String restrict) throws WrongRestrictionException;
+    public int count(String restrict) throws WrongRestrictionException {
+        return count(parse(restrict));
+    }
 
     @Override
     @Transactional(rollbackFor = BaseException.class)

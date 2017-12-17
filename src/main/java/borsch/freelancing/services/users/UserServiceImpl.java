@@ -1,13 +1,18 @@
 package borsch.freelancing.services.users;
 
+import borsch.freelancing.criteria.Criteria;
 import borsch.freelancing.criteria.impl.UserCriteria;
 import borsch.freelancing.exceptions.BaseException;
 import borsch.freelancing.exceptions.bad_request.WrongPasswordException;
-import borsch.freelancing.persistence.criteria.ICriteriaRepository;
+import borsch.freelancing.persistence.dao.repositories.ClientRepository;
+import borsch.freelancing.persistence.dao.repositories.DeveloperRepository;
 import borsch.freelancing.persistence.dao.repositories.UsersRepository;
 import borsch.freelancing.pojo.entities.UserEntity;
 import borsch.freelancing.pojo.enums.RolesEnum;
-import borsch.freelancing.services.utils.SessionUtils;
+import borsch.freelancing.pojo.view.ClientView;
+import borsch.freelancing.pojo.view.DeveloperView;
+import borsch.freelancing.services.clients.IClientService;
+import borsch.freelancing.services.developers.IDeveloperService;
 import borsch.freelancing.exceptions.bad_request.WrongRestrictionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,26 +42,28 @@ import java.util.*;
 public class UserServiceImpl extends IUserService {
 
     @Resource
-    private UsersRepository repository;
+    private UsersRepository usersRepository;
 
     @Autowired
-    private ICriteriaRepository criteriaRepository;
+    private IDeveloperService developerService;
+
+    @Autowired
+    private DeveloperRepository developerRepository;
+
+    @Autowired
+    private IClientService clientService;
+
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Override
     public UserEntity getByEmail(String email) throws NoSuchEntityException {
-        UserEntity entity = repository.findByEmail(email);
+        UserEntity entity = usersRepository.findByEmail(email);
 
         if (entity == null)
             throw new NoSuchEntityException("users", "user email " + email);
 
         return entity;
-    }
-
-    @Override
-    public List<Map<String, Object>> getList(Set<String> fields, String restrict) throws BaseException {
-        UserCriteria criteria = new UserCriteria(restrict);
-
-        return getList(criteria, fields);
     }
 
     @Override
@@ -69,7 +76,7 @@ public class UserServiceImpl extends IUserService {
     }
 
     public void update(UserEntity entity) {
-        repository.saveAndFlush(entity);
+        usersRepository.saveAndFlush(entity);
     }
 
     @Override
@@ -100,19 +107,47 @@ public class UserServiceImpl extends IUserService {
 
     @Override
     @Transactional(propagation = Propagation.NEVER)
-    public Map<String, Object> registration(UserView user) throws IllegalAccessException, BaseException, InstantiationException {
-        int userId = create(user);
-        signInUser(user);
+    public Map<String, Object> registration(UserView user, HttpServletRequest request, HttpServletResponse response) throws IllegalAccessException, BaseException, InstantiationException {
+        int developerId = 0;
+        int clientId = 0;
 
-        return new HashMap<String, Object>() {{
-            put("user_id", userId);
-        }};
+        try {
+            final int userId = create(user);
+            user.setId(userId);
+            signInUser(user);
+
+            DeveloperView developerView = user.createDeveloper();
+            developerView.setUser_id(userId);
+            developerId = developerService.create(developerView);
+
+            ClientView clientView = new ClientView();
+            clientView.setUser_id(userId);
+            clientId = clientService.create(clientView);
+
+            return new HashMap<String, Object>() {{
+                put("user_id", userId);
+            }};
+        } catch (BaseException e) {
+            if (developerId > 0) {
+                developerRepository.delete(developerId);
+            }
+
+            if (clientId > 0) {
+                clientRepository.delete(clientId);
+            }
+
+            if (user.getId() > 0) {
+                usersRepository.delete(user.getId());
+            }
+
+            logoutUser(request, response);
+
+            throw e;
+        }
     }
 
     @Override
-    public int count(String restrict) throws WrongRestrictionException {
-        UserCriteria criteria = new UserCriteria(restrict);
-
-        return criteriaRepository.count(criteria);
+    public Criteria<UserEntity> parse(String restrict) throws WrongRestrictionException {
+        return new UserCriteria(restrict);
     }
 }

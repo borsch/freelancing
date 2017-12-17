@@ -26,5 +26,5 @@ public abstract class IUserService extends BaseService<UserEntity, UserView, Int
 
     public abstract boolean logoutUser(HttpServletRequest request, HttpServletResponse response);
 
-    public abstract Map<String, Object> registration(UserView view) throws BaseException, InstantiationException, IllegalAccessException;
+    public abstract Map<String, Object> registration(UserView view, HttpServletRequest request, HttpServletResponse response) throws BaseException, InstantiationException, IllegalAccessException;
 }

@@ -34,6 +34,12 @@ public class UserEntity implements Serializable, GetableById<Integer>{
     @JoinColumn(name = "ROLE_ID", nullable = false)
     private RoleEntity roleEntity;
 
+    @OneToOne(mappedBy = "user")
+    private DeveloperEntity developer;
+
+    @OneToOne(mappedBy = "user")
+    private ClientEntity client;
+
     @Override
     public Integer getId() {
         return id;
@@ -70,6 +76,22 @@ public class UserEntity implements Serializable, GetableById<Integer>{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public DeveloperEntity getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(DeveloperEntity developer) {
+        this.developer = developer;
+    }
+
+    public ClientEntity getClient() {
+        return client;
+    }
+
+    public void setClient(ClientEntity client) {
+        this.client = client;
     }
 
     @Override

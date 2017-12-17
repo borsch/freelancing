@@ -1,6 +1,7 @@
 package borsch.freelancing.pojo.entities;
 
 import borsch.freelancing.pojo.enums.SkillLevelEnum;
+import borsch.freelancing.pojo.helpers.GetableById;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "DEVELOPERS")
-public class DeveloperEntity implements Serializable {
+public class DeveloperEntity implements Serializable, GetableById<Integer> {
 
     @Id
     @GeneratedValue
@@ -21,6 +22,7 @@ public class DeveloperEntity implements Serializable {
     @Column(name = "RATING")
     private float rating;
 
+    @OneToOne
     @JoinColumn(name = "USER_ID")
     private UserEntity user;
 
@@ -35,8 +37,14 @@ public class DeveloperEntity implements Serializable {
     @OneToMany(mappedBy = "developer")
     private Set<ProjectEntity> projects;
 
-    public int getId() {
+    @Override
+    public Integer getId() {
         return id;
+    }
+
+    @Override
+    public int compareId(int i) {
+        return ((Integer)id).compareTo(i);
     }
 
     public void setId(int id) {

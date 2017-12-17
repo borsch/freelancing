@@ -49,8 +49,10 @@ public class UserApiController extends BaseApiController<UserEntity, UserView, I
     public
     @ResponseBody Response<Map<String, Object>>
     registerFullUser(
-            @RequestBody UserView view
+            @RequestBody UserView view,
+            HttpServletRequest request,
+            HttpServletResponse response
     ) throws BaseException, IllegalAccessException, InstantiationException {
-        return responseFactory.get(userService.registration(view));
+        return responseFactory.get(userService.registration(view, request, response));
     }
 }

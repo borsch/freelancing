@@ -1,9 +1,12 @@
 package borsch.freelancing.controllers.web;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.security.Principal;
 
 /**
  * Created by Andrii on 27.07.2016.
@@ -12,13 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class IndexController {
 
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
-    public String indexPage(
-            Model model
-    ){
+    public String indexPage(Model model){
         return "index/index";
     }
 
+    @PreAuthorize("isAnonymous()")
+    @RequestMapping(value = "/sign_in")
+    public String signIn() {
+        return "auth/sign_in";
+    }
 
+    @PreAuthorize("isAnonymous()")
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String signUp() {
         return "auth/register";

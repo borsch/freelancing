@@ -1,6 +1,7 @@
 package borsch.freelancing.pojo.view;
 
 import borsch.freelancing.pojo.enums.RolesEnum;
+import borsch.freelancing.pojo.enums.SkillLevelEnum;
 import borsch.freelancing.pojo.helpers.GetableById;
 
 import java.util.List;
@@ -14,6 +15,18 @@ public class UserView implements GetableById<Integer> {
     private String email;
     private String name;
     private RolesEnum role = RolesEnum.user;
+
+    // developer fields
+    private SkillLevelEnum skill_level;
+    private List<String> tags;
+
+    public DeveloperView createDeveloper() {
+        DeveloperView developer = new DeveloperView();
+        developer.setSkill_level(skill_level);
+        developer.setTags(tags);
+
+        return developer;
+    }
 
     @Override
     public Integer getId() {
@@ -51,6 +64,22 @@ public class UserView implements GetableById<Integer> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public SkillLevelEnum getSkill_level() {
+        return skill_level;
+    }
+
+    public void setSkill_level(SkillLevelEnum skill_level) {
+        this.skill_level = skill_level;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     @Override
