@@ -65,6 +65,10 @@
         <property name="releaseHelperThreads" value="3"/>
     </bean>
 
+    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+        <property name="dataSource" ref="mainDataSource" />
+    </bean>
+
     <!-- SPRING - JPA -->
     <jpa:repositories
             base-package="borsch.freelancing.persistence.dao" />
@@ -79,7 +83,7 @@
     </bean>
 
     <bean id="entityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="flyway">
         <property name="dataSource" ref="mainDataSource"/>
         <property name="packagesToScan" value="borsch.freelancing.pojo.entities"/>
         <property name="jpaVendorAdapter">
