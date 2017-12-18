@@ -4,6 +4,7 @@ import borsch.freelancing.pojo.helpers.GetableById;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by olehkurpiak on 17.12.2017.
@@ -19,6 +20,14 @@ public class TagEntity implements Serializable, GetableById<Integer> {
 
     @Column(name = "TAG")
     private String tag;
+
+    @ManyToMany
+    @JoinTable(name = "TAGS_TO_DEVELOPERS", joinColumns = @JoinColumn(name = "TAG_ID"), inverseJoinColumns = @JoinColumn(name = "DEVELOPER_ID"))
+    private Set<DeveloperEntity> developers;
+
+    @ManyToMany
+    @JoinTable(name = "TAGS_TO_PROJECTS", joinColumns = @JoinColumn(name = "TAG_ID"), inverseJoinColumns = @JoinColumn(name = "PROJECT_ID"))
+    private Set<ProjectEntity> projects;
 
     @Override
     public Integer getId() {
@@ -40,6 +49,22 @@ public class TagEntity implements Serializable, GetableById<Integer> {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public Set<DeveloperEntity> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(Set<DeveloperEntity> developers) {
+        this.developers = developers;
+    }
+
+    public Set<ProjectEntity> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<ProjectEntity> projects) {
+        this.projects = projects;
     }
 
     @Override

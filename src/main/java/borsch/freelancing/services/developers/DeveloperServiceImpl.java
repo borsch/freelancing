@@ -17,6 +17,6 @@ public class DeveloperServiceImpl extends IDeveloperService {
 
     @Override
     public Criteria<DeveloperEntity> parse(String restrict) throws WrongRestrictionException {
-        return new DeveloperCriteria();
+        return new DeveloperCriteria(restrict);
     }
 }

@@ -25,5 +25,8 @@ public class UserMerger implements Merger<UserEntity, UserView> {
 
         if (view.getRole() != null) entity.setRoleEntity(roleRepository.findByName(view.getRole()));
         else if (entity.getRoleEntity() != null) view.setRole(entity.getRoleEntity().getName());
+
+        if (view.getName() != null) entity.setName(view.getName());
+        else view.setName(entity.getName());
     }
 }

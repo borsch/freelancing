@@ -1,18 +1,35 @@
 package borsch.freelancing.criteria.impl;
 
 import borsch.freelancing.criteria.Criteria;
+import borsch.freelancing.exceptions.bad_request.WrongRestrictionException;
 import borsch.freelancing.pojo.entities.DeveloperEntity;
+import borsch.freelancing.pojo.entities.TagEntity;
+import borsch.freelancing.pojo.enums.SkillLevelEnum;
+import borsch.freelancing.services.tags.ITagsService;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by olehkurpiak on 17.12.2017.
  */
 public class DeveloperCriteria extends Criteria<DeveloperEntity> {
+
+    private SkillLevelEnum skill_level;
+    private List<String> tags;
+
+    public DeveloperCriteria(String restrict) throws WrongRestrictionException {
+        this(0, 0);
+
+        DeveloperCriteria parsed = parse(restrict, DeveloperCriteria.class);
+        if (parsed != null) {
+            this.skill_level = parsed.skill_level;
+            this.tags = parsed.tags;
+        }
+    }
 
     public DeveloperCriteria() {
         this(0 ,0);
@@ -24,6 +41,37 @@ public class DeveloperCriteria extends Criteria<DeveloperEntity> {
 
     @Override
     public List<Predicate> query(Root<DeveloperEntity> root, CriteriaBuilder cb) {
-        return new ArrayList<>();
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (skill_level != null) {
+            Expression<SkillLevelEnum> expression = root.get("skillLevel");
+
+            predicates.add(cb.equal(expression, skill_level));
+        }
+
+        if (tags != null && !tags.isEmpty()) {
+            Join<DeveloperEntity, TagEntity> tagsJoin = root.join("tags", JoinType.INNER);
+            Expression<String> expression = tagsJoin.get("tag");
+
+            predicates.add(expression.in(tags));
+        }
+
+        return predicates;
+    }
+
+    public SkillLevelEnum getSkill_level() {
+        return skill_level;
+    }
+
+    public void setSkill_level(SkillLevelEnum skill_level) {
+        this.skill_level = skill_level;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }

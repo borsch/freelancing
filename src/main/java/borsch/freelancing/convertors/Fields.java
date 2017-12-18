@@ -31,5 +31,16 @@ public class Fields {
         public static final String CLIENT_ID = "client_id";
     }
 
+    public static class Developer {
+        public static final String ID = "id";
+        public static final String RATING = "rating";
+        public static final String PROJECTS_AMOUNT = "projects_amount";
+        public static final String SKILL_LEVEL = "skill_level";
+        public static final String TAGS = "tags";
+        public static final String USER_ID = "user_id";
+        public static final String USER_NAME = "user_name";
+        public static final String PROJECT_IDS = "project_ids";
+    }
+
     public static final String DEFAULT ="id";
 }
