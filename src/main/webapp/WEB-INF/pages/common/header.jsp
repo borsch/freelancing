@@ -21,6 +21,7 @@
                         <ul class="topmenu">
                             <li id="home"><a href="/"><s:message code="navmenu.home"/></a></li>
                             <li><a href="/developers">Developers</a></li>
+                            <li><a href="/projects">Projects</a></li>
                             <security:authorize access="isAnonymous()">
                                 <li><a href="/register">Registration</a></li>
                                 <li><a href="/sign_in">Log in</a></li>

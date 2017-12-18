@@ -40,8 +40,11 @@ public class IndexController {
 
     @RequestMapping(value = "/developers", method = RequestMethod.GET)
     public String developers() {
-
         return "index/developers";
     }
 
+    @RequestMapping(value = "/projects", method = RequestMethod.GET)
+    public String projects() {
+        return "index/projects";
+    }
 }
