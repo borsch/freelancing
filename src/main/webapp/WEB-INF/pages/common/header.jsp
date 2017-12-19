@@ -30,6 +30,7 @@
                                 <li><a href="/profile">Profile</a></li>
                                 <li><a id="logout" href="#">Log out</a></li>
                             </security:authorize>
+                            <li><a href="/coefficients">Coefficients</a></li>
                         </ul>
                     </nav>
                 </div>

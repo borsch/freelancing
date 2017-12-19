@@ -9,6 +9,7 @@ import borsch.freelancing.pojo.entities.DeveloperEntity;
 import borsch.freelancing.pojo.entities.TagEntity;
 import borsch.freelancing.pojo.entities.UserEntity;
 import borsch.freelancing.pojo.enums.SkillLevelEnum;
+import borsch.freelancing.services.Coefficients;
 import borsch.freelancing.services.tags.ITagsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,15 +56,15 @@ public class DeveloperServiceImpl extends IDeveloperService {
                 continue;
             }
 
-            float commonQuota = (float)commonTags / tags.size();
+            float commonTagsQuota = (float)commonTags / tags.size();
 
             // plus one, because middle - middle = 1
             int skillDiff = developer.getSkillLevel().ordinal() - min.ordinal() + 1;
             float rating = developer.getRating() / MAX_RATING_VALUE;
 
             Map<String, Object> map = converter.convert(developer, fields);
-            map.put("developer_score", evaluateDeveloper(commonQuota, skillDiff, rating));
-            map.put("common_tags_percents", (int)(commonQuota * 100));
+            map.put("developer_score", evaluateDeveloper(commonTagsQuota, skillDiff, rating));
+            map.put("common_tags_percents", (int)(commonTagsQuota * 100));
 
             result.add(map);
         }
@@ -73,8 +74,16 @@ public class DeveloperServiceImpl extends IDeveloperService {
         return result;
     }
 
-    private float evaluateDeveloper(float commonQuota, int skillDiff, float rating) {
-        return SKILL_LEVEL_WEIGHT * skillDiff + commonQuota * TAGS_WEIGHT + rating * RATING_WEIGHT;
+    private float evaluateDeveloper(float commonTagsQuota, int skillDiff, float rating) {
+        /*
+        return skillDiff + Coefficients.getCoefficient(Coefficients.SKILL_LEVEL_WEIGHT)+
+                commonTagsQuota * Coefficients.getCoefficient(Coefficients.TAGS_WEIGHT) +
+                rating * Coefficients.getCoefficient(Coefficients.RATING_WEIGHT);
+        /*/
+        return skillDiff + SKILL_LEVEL_WEIGHT+
+                commonTagsQuota * TAGS_WEIGHT +
+                rating * RATING_WEIGHT;
+        //*/
     }
 
     private DeveloperEntity idealDeveloper(SkillLevelEnum level, List<String> tags) {
