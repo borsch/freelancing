@@ -55,11 +55,11 @@ public class DevelopersController {
         try {
             Map<String, Object> project = projectService.getById(
                     projectId,
-                    new HashSet<>(Arrays.asList("name", "client_id", "developer_id", "min_skill_level", "tags"))
+                    new HashSet<>(Arrays.asList("id", "name", "client_id", "developer_id", "min_skill_level", "tags"))
             );
 
             if (project.get("developer_id") != null || !client.getId().equals(project.get("client_id"))) {
-                return "redirect:/";
+                return "redirect:/profile/my_projects";
             }
 
             model.addAttribute("project", project);

@@ -39,6 +39,9 @@
                                     <p><strong>Projects amount: </strong>${developer.projects_amount}</p>
                                     <p><strong>Developer score: ${developer.developer_score}</strong></p>
                                     <p><strong>Common tags: ${developer.common_tags_percents}%</strong></p>
+                                    <p class="text-center">
+                                        <button class="btn-theme btn-2 select-developer" data-id="${developer.id}">Select developer</button>
+                                    </p>
                                 </div>
                             </c:forEach>
                         </c:when>
@@ -52,6 +55,29 @@
     </div>
 
     <jsp:include page="../common/footer.jsp" />
+
+    <script>
+        $('.select-developer').click(function(){
+            var $self = $(this),
+                data = { id: ${project.id}, developer_id: $self.data('id') };
+
+            Ajax.post({
+                url: '/api/projects/',
+                data: data,
+                success: function(response) {
+                    if (response.result) {
+                        showSuccessMessage('Developer added');
+
+                        setTimeout(function(){
+                            location.href = '/profile/my_projects';
+                        }, 500);
+                    } else {
+                        showErrorMessage(response.result);
+                    }
+                }
+            })
+        });
+    </script>
     </body>
     </html>
 </compress:html>
