@@ -30,11 +30,17 @@ public final class Coefficients {
     public static final String TAGS_WEIGHT = "TAGS_WEIGHT";
     public static final String RATING_WEIGHT = "RATING_WEIGHT";
 
+    public static final String PROJECT_MIN_SKILL_LEVEL_WEIGHT = "PROJECT_MIN_SKILL_LEVEL_WEIGHT";
+    public static final String PROJECT_TAGS_WEIGHT = "PROJECT_TAGS_WEIGHT";
+
     // public -  bad solution. just to access in controller without additional getmap method
     public static final Map<String, Float> COEFFICIENTS_MAP = new HashMap<>();
     static {
         COEFFICIENTS_MAP.put(SKILL_LEVEL_WEIGHT, 0.15f);
         COEFFICIENTS_MAP.put(TAGS_WEIGHT, 0.8f);
         COEFFICIENTS_MAP.put(RATING_WEIGHT, 0.05f);
+
+        COEFFICIENTS_MAP.put(PROJECT_MIN_SKILL_LEVEL_WEIGHT, 0.4f);
+        COEFFICIENTS_MAP.put(PROJECT_TAGS_WEIGHT, 0.6f);
     }
 }

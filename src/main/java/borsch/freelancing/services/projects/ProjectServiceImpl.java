@@ -99,8 +99,8 @@ public class ProjectServiceImpl extends IProjectService {
     }
 
     private float evaluate(float commonTagsQuota, int skillDiff) {
-        return skillDiff * Coefficients.getCoefficient(Coefficients.SKILL_LEVEL_WEIGHT) +
-                commonTagsQuota * Coefficients.getCoefficient(Coefficients.TAGS_WEIGHT);
+        return skillDiff * Coefficients.getCoefficient(Coefficients.PROJECT_MIN_SKILL_LEVEL_WEIGHT) +
+                commonTagsQuota * Coefficients.getCoefficient(Coefficients.PROJECT_TAGS_WEIGHT);
     }
 
     private ProjectEntity ideal(SkillLevelEnum level, List<String> tags) {
