@@ -21,7 +21,7 @@
                 <c:choose>
                     <c:when test="${projects ne null}">
                         <c:forEach var="project" items="${projects}">
-                            <div class="row">
+                            <div class="row list-item">
                                 <p><strong>Name: </strong>${project.name}</p>
                                 <p><strong>Status: </strong>${project.status}</p>
                                 <p><strong>Minimum skill level: </strong>${project.min_skill_level}</p>

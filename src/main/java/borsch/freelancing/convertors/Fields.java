@@ -14,6 +14,8 @@ public class Fields {
         public static final String DEVELOPER_RATING = "developer_rating";
         public static final String DEVELOPER_PROJECTS_AMOUNT = "developer_projects_amount";
         public static final String CLIENT_RATING = "client_rating";
+        public static final String CLIENT_ID = "client_id";
+        public static final String DEVELOPER_ID = "developer_id";
         public static final String CLIENT_PROJECTS_AMOUNT = "client_projects_amount";
         public static final String DEVELOPER_SKILL_LEVEL = "developer_skill_level";
         public static final String DEVELOPER_TAGS = "developer_tags";

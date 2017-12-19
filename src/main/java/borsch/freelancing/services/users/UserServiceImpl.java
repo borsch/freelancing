@@ -163,6 +163,13 @@ public class UserServiceImpl extends IUserService {
     }
 
     @Override
+    public Map<String, Object> me(Set<String> fields) throws AuthRequiredException {
+        sessionUtils.authorized();
+
+        return userConverter.convert(sessionUtils.getCurrentUser(), fields);
+    }
+
+    @Override
     public Criteria<UserEntity> parse(String restrict) throws WrongRestrictionException {
         return new UserCriteria(restrict);
     }

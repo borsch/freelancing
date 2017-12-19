@@ -65,6 +65,6 @@ public class ProfileController {
             model.addAttribute("projects", myProjects);
         } catch (BaseException e) { }
 
-        return "profile/my_projects";
+        return "profile/developing";
     }
 }

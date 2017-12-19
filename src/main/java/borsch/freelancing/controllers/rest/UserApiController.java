@@ -1,5 +1,6 @@
 package borsch.freelancing.controllers.rest;
 
+import borsch.freelancing.convertors.Fields;
 import borsch.freelancing.pojo.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,5 +55,12 @@ public class UserApiController extends BaseApiController<UserEntity, UserView, I
             HttpServletResponse response
     ) throws BaseException, IllegalAccessException, InstantiationException {
         return responseFactory.get(userService.registration(view, request, response));
+    }
+
+    @RequestMapping(value = "/me", method = RequestMethod.GET)
+    public @ResponseBody Response<Map<String, Object>> me(
+            @RequestParam(value = "fields", required = false, defaultValue = Fields.DEFAULT) Set<String> fields
+    ) throws BaseException {
+        return responseFactory.get(userService.me(fields));
     }
 }

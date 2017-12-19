@@ -35,7 +35,7 @@ public class ProjectConverter extends Converter<ProjectEntity> {
             map.put(CLIENT_RATING, object.getClientRating());
         if (fields.contains(TAGS))
             map.put(TAGS, object.getTags().stream().map(TagEntity::getTag).collect(Collectors.toList()));
-        if (fields.contains(DEVELOPER_ID))
+        if (fields.contains(DEVELOPER_ID) && object.getDeveloper() != null)
             map.put(DEVELOPER_ID, object.getDeveloper().getId());
         if (fields.contains(CLIENT_ID))
             map.put(CLIENT_ID, object.getClient().getId());

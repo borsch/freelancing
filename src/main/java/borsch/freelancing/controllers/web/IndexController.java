@@ -42,9 +42,4 @@ public class IndexController {
     public String developers() {
         return "index/developers";
     }
-
-    @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    public String projects() {
-        return "index/projects";
-    }
 }

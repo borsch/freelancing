@@ -2110,3 +2110,13 @@ h4.modal-title {
         border-top: 3px solid #1a3029;
     }
 }
+
+.list-item {
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+}
+
+.list-item:last-of-type {
+    border-bottom: none;
+    margin-bottom: inherit;
+}

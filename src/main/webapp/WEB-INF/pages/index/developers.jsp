@@ -9,15 +9,7 @@
         <title>Developers</title>
         <jsp:include page="../common/include_resources.jsp" />
         <style>
-            .developer {
-                border-bottom: 1px solid black;
-                margin-bottom: 20px;
-            }
 
-            .developer:last-of-type {
-                border-bottom: none;
-                margin-bottom: inherit;
-            }
         </style>
     </head>
     <body>
@@ -56,7 +48,7 @@
         </div>
     </div>
 
-    <div class="col-xs-12 developer" id="developer_clone" style="display: none;">
+    <div class="col-xs-12 list-item" id="developer_clone" style="display: none;">
         <p><strong>Name: </strong> <span data-field="user_name"></span></p>
         <p><strong>Rating: </strong> <span data-field="rating"></span></p>
         <p><strong>Skill level: </strong> <span data-field="skill_level"></span></p>

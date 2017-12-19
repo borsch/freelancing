@@ -8,17 +8,6 @@
         <jsp:include page="../common/include_external_head_top.jsp" />
         <title>Projects</title>
         <jsp:include page="../common/include_resources.jsp" />
-        <style>
-            .developer {
-                border-bottom: 1px solid black;
-                margin-bottom: 20px;
-            }
-
-            .developer:last-of-type {
-                border-bottom: none;
-                margin-bottom: inherit;
-            }
-        </style>
     </head>
     <body>
     <jsp:include page="../common/include_external_body_top.jsp" />
@@ -56,7 +45,7 @@
         </div>
     </div>
 
-    <div class="col-xs-12 developer" id="project_clone" style="display: none;">
+    <div class="col-xs-12 list-item" id="project_clone" style="display: none;">
         <p><strong>Name: </strong> <span data-field="name"></span></p>
         <p><strong>Status: </strong> <span data-field="status"></span></p>
         <p><strong>Minimum skill level: </strong> <span data-field="min_skill_level"></span></p>

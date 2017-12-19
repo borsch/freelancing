@@ -31,6 +31,8 @@ public class UserConverter extends Converter<UserEntity> {
 
         ClientEntity client = object.getClient();
         if (client != null) {
+            if (fields.contains(CLIENT_ID))
+                map.put(CLIENT_ID, client.getId());
             if (fields.contains(CLIENT_RATING))
                 map.put(CLIENT_RATING, client.getRating());
             if (fields.contains(CLIENT_PROJECTS_AMOUNT))
@@ -39,6 +41,8 @@ public class UserConverter extends Converter<UserEntity> {
 
         DeveloperEntity developer = object.getDeveloper();
         if (developer != null) {
+            if (fields.contains(DEVELOPER_ID))
+                map.put(DEVELOPER_ID, developer.getId());
             if (fields.contains(DEVELOPER_PROJECTS_AMOUNT))
                 map.put(DEVELOPER_PROJECTS_AMOUNT, developer.getProjects().size());
             if (fields.contains(DEVELOPER_RATING))
