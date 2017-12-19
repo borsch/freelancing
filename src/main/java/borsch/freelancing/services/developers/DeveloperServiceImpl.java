@@ -75,15 +75,9 @@ public class DeveloperServiceImpl extends IDeveloperService {
     }
 
     private float evaluateDeveloper(float commonTagsQuota, int skillDiff, float rating) {
-        /*
-        return skillDiff + Coefficients.getCoefficient(Coefficients.SKILL_LEVEL_WEIGHT)+
+        return skillDiff * Coefficients.getCoefficient(Coefficients.SKILL_LEVEL_WEIGHT) +
                 commonTagsQuota * Coefficients.getCoefficient(Coefficients.TAGS_WEIGHT) +
                 rating * Coefficients.getCoefficient(Coefficients.RATING_WEIGHT);
-        /*/
-        return skillDiff + SKILL_LEVEL_WEIGHT+
-                commonTagsQuota * TAGS_WEIGHT +
-                rating * RATING_WEIGHT;
-        //*/
     }
 
     private DeveloperEntity idealDeveloper(SkillLevelEnum level, List<String> tags) {
