@@ -52,6 +52,10 @@
         <p><strong>Tags: </strong> <span data-field="tags"></span></p>
         <p><strong>Developer rating: </strong> <span data-field="developer_rating"></span></p>
         <p><strong>Client rating: </strong> <span data-field="client_rating"></span></p>
+
+        <p class="text-center">
+            <a ><button class="btn-theme btn-2">View project</button></a>
+        </p>
     </div>
 
     <jsp:include page="../common/footer.jsp" />
@@ -84,7 +88,7 @@
             });
 
             Ajax.get({
-                url: '/api/projects/?fields=name,status,min_skill_level,tags,developer_rating,client_rating,developer_id,client_id&restrict=' + encodeURIComponent(JSON.stringify(restrict)),
+                url: '/api/projects/?fields=id,name,status,min_skill_level,tags,developer_rating,client_rating,developer_id,client_id&restrict=' + encodeURIComponent(JSON.stringify(restrict)),
                 success: function(response) {
                     var projects = response.result;
 
@@ -104,6 +108,8 @@
 
                                 $clone.find('[data-field=' + key + ']').text(value);
                             }
+
+                            $clone.find('a').attr('href', '/projects/' + dev.id + '/view');
 
                             $projects_list.append($clone);
                         });

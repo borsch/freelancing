@@ -28,6 +28,10 @@
                                 <p><strong>Project tags: </strong>${project.tags}</p>
                                 <p><strong>Developer rating: </strong>${project.developer_rating}</p>
                                 <p><strong>Client rating: </strong>${project.client_rating}</p>
+
+                                <p class="text-center">
+                                    <a href="/projects/${project.id}/view"><button class="btn-theme btn-2">View project</button></a>
+                                </p>
                             </div>
                         </c:forEach>
                     </c:when>

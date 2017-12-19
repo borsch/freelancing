@@ -19,4 +19,6 @@ public abstract class IDeveloperService extends BaseService<DeveloperEntity, Dev
     }
 
     public abstract List<Map<String, Object>> suggestDevelopers(SkillLevelEnum min, List<String> tags, Set<String> fields) throws BaseException;
+
+    public abstract float ratingRecount(DeveloperView view) throws BaseException;
 }

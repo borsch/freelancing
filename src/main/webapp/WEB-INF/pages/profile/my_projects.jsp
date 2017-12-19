@@ -28,11 +28,13 @@
                                 <p><strong>Project tags: </strong>${project.tags}</p>
                                 <p><strong>Developer rating: </strong>${project.developer_rating}</p>
                                 <p><strong>Client rating: </strong>${project.client_rating}</p>
-                                <c:if test="${project.developer_id eq null}">
-                                    <p class="text-center">
+                                <p class="text-center">
+                                    <c:if test="${project.developer_id eq null}">
                                         <a href="/developers/find?project_id=${project.id}"><button class="btn-theme btn-2">Find developer</button></a>
-                                    </p>
-                                </c:if>
+                                    </c:if>
+
+                                    <a href="/projects/${project.id}/view"><button class="btn-theme btn-2">View project</button></a>
+                                </p>
                             </div>
                         </c:forEach>
                     </c:when>

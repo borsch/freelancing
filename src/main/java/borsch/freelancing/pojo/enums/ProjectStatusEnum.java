@@ -6,7 +6,6 @@ package borsch.freelancing.pojo.enums;
 public enum ProjectStatusEnum {
 
     NEW,
-    IN_PROGRESS,
     DONE
 
 }

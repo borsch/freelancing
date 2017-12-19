@@ -106,7 +106,7 @@
                             showSuccessMessage('Successfully created');
 
                             setTimeout(function(){
-                                location.href = '/profile/my_projects';
+                                location.href = '/projects/' + response.result + '/view';
                             }, 500);
                         } else {
                             showErrorMessage(response.error);

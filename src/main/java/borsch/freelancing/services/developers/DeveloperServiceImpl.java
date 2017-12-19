@@ -6,9 +6,11 @@ import borsch.freelancing.criteria.impl.DeveloperCriteria;
 import borsch.freelancing.exceptions.BaseException;
 import borsch.freelancing.exceptions.bad_request.WrongRestrictionException;
 import borsch.freelancing.pojo.entities.DeveloperEntity;
+import borsch.freelancing.pojo.entities.ProjectEntity;
 import borsch.freelancing.pojo.entities.TagEntity;
 import borsch.freelancing.pojo.entities.UserEntity;
 import borsch.freelancing.pojo.enums.SkillLevelEnum;
+import borsch.freelancing.pojo.view.DeveloperView;
 import borsch.freelancing.services.Coefficients;
 import borsch.freelancing.services.tags.ITagsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +74,26 @@ public class DeveloperServiceImpl extends IDeveloperService {
         result.sort(DEVELOPER_MAP_COMPARATOR);
 
         return result;
+    }
+
+    @Override
+    public float ratingRecount(DeveloperView view) throws BaseException {
+        DeveloperEntity entity = getById(view.getId());
+
+        Set<ProjectEntity> projects = entity.getProjects();
+        if (projects.isEmpty()) {
+            return 0;
+        }
+
+        float sum = projects.stream()
+                .map(ProjectEntity::getDeveloperRating)
+                .reduce(0f, (a, b) -> a + b);
+        float rating = sum / projects.size();
+
+        entity.setRating(rating);
+        save(entity);
+
+        return rating;
     }
 
     private float evaluateDeveloper(float commonTagsQuota, int skillDiff, float rating) {

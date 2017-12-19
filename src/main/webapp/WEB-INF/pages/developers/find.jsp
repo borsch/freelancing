@@ -59,7 +59,7 @@
     <script>
         $('.select-developer').click(function(){
             var $self = $(this),
-                data = { id: ${project.id}, developer_id: $self.data('id') };
+                data = { id: ${project.id}, developer_id: $self.data('id'), status: 'DONE' };
 
             Ajax.post({
                 url: '/api/projects/',
@@ -69,7 +69,7 @@
                         showSuccessMessage('Developer added');
 
                         setTimeout(function(){
-                            location.href = '/profile/my_projects';
+                            location.href = '/projects/${project.id}/view';
                         }, 500);
                     } else {
                         showErrorMessage(response.result);

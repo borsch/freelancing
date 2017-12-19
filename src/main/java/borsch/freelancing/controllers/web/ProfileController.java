@@ -57,7 +57,7 @@ public class ProfileController {
 
     @RequestMapping(value = "/i_developing", method = RequestMethod.GET)
     public String iDeveloping(Model model) {
-        Set<String> fields = new HashSet<>(Arrays.asList("name", "status", "min_skill_level",
+        Set<String> fields = new HashSet<>(Arrays.asList("id", "name", "status", "min_skill_level",
                 "developer_rating", "client_rating", "tags", "developer_id", "client_id"));
         try {
             List<Map<String, Object>> myProjects = projectService.getCurrentUserProjectsDeveloping(fields);
