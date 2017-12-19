@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class DeveloperCriteria extends Criteria<DeveloperEntity> {
 
     private SkillLevelEnum skill_level;
+    private SkillLevelEnum min_skill_level;
     private List<String> tags;
 
     public DeveloperCriteria(String restrict) throws WrongRestrictionException {
@@ -28,6 +29,7 @@ public class DeveloperCriteria extends Criteria<DeveloperEntity> {
         if (parsed != null) {
             this.skill_level = parsed.skill_level;
             this.tags = parsed.tags;
+            this.min_skill_level = parsed.min_skill_level;
         }
     }
 
@@ -47,6 +49,12 @@ public class DeveloperCriteria extends Criteria<DeveloperEntity> {
             Expression<SkillLevelEnum> expression = root.get("skillLevel");
 
             predicates.add(cb.equal(expression, skill_level));
+        }
+
+        if (min_skill_level != null) {
+            Expression<SkillLevelEnum> expression = root.get("skillLevel");
+
+            predicates.add(cb.greaterThanOrEqualTo(expression, min_skill_level));
         }
 
         if (tags != null && !tags.isEmpty()) {
@@ -73,5 +81,13 @@ public class DeveloperCriteria extends Criteria<DeveloperEntity> {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public SkillLevelEnum getMin_skill_level() {
+        return min_skill_level;
+    }
+
+    public void setMin_skill_level(SkillLevelEnum min_skill_level) {
+        this.min_skill_level = min_skill_level;
     }
 }

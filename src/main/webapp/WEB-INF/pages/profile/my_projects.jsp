@@ -28,6 +28,11 @@
                                 <p><strong>Project tags: </strong>${project.tags}</p>
                                 <p><strong>Developer rating: </strong>${project.developer_rating}</p>
                                 <p><strong>Client rating: </strong>${project.client_rating}</p>
+                                <c:if test="${project.developer_id eq null}">
+                                    <p class="text-center">
+                                        <a href="/developers/find?project_id=${project.id}"><button class="btn-theme btn-2">Find developer</button></a>
+                                    </p>
+                                </c:if>
                             </div>
                         </c:forEach>
                     </c:when>
@@ -38,7 +43,7 @@
                     </c:otherwise>
                 </c:choose>
                 <div class="row text-center">
-                    <a href="/projects/create"><button type="submit" class="btn-theme btn-2">Create project</button></a>
+                    <a href="/projects/create"><button class="btn-theme btn-2">Create project</button></a>
                 </div>
             </div>
             <div class="col-sm-3 col-sm-pull-9">
