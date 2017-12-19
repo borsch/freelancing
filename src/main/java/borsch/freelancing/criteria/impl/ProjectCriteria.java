@@ -6,6 +6,7 @@ import borsch.freelancing.pojo.entities.ClientEntity;
 import borsch.freelancing.pojo.entities.DeveloperEntity;
 import borsch.freelancing.pojo.entities.ProjectEntity;
 import borsch.freelancing.pojo.entities.TagEntity;
+import borsch.freelancing.pojo.enums.ProjectStatusEnum;
 import borsch.freelancing.pojo.enums.SkillLevelEnum;
 
 import javax.persistence.criteria.*;
@@ -21,6 +22,7 @@ public class ProjectCriteria extends Criteria<ProjectEntity> {
     private Integer client_id;
     private SkillLevelEnum min_skill_level;
     private List<String> tags;
+    private ProjectStatusEnum status;
 
     public ProjectCriteria(String restrict) throws WrongRestrictionException {
         this();
@@ -32,6 +34,7 @@ public class ProjectCriteria extends Criteria<ProjectEntity> {
             this.client_id = parsed.developer_id;
             this.min_skill_level = parsed.min_skill_level;
             this.tags = parsed.tags;
+            this.status = parsed.status;
         }
     }
 
@@ -65,6 +68,12 @@ public class ProjectCriteria extends Criteria<ProjectEntity> {
             Expression<SkillLevelEnum> expression = root.get("minSkillLevel");
 
             predicates.add(cb.lessThanOrEqualTo(expression, min_skill_level));
+        }
+
+        if (status != null) {
+            Expression<ProjectStatusEnum> expression = root.get("status");
+
+            predicates.add(cb.lessThanOrEqualTo(expression, status));
         }
 
         if (tags != null && !tags.isEmpty()) {
@@ -107,5 +116,13 @@ public class ProjectCriteria extends Criteria<ProjectEntity> {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public ProjectStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProjectStatusEnum status) {
+        this.status = status;
     }
 }

@@ -30,7 +30,7 @@ public class ProfileController {
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
     public String profile(Model model) {
         Set<String> fields = new HashSet<>(Arrays.asList("id", "developer_rating", "developer_projects_amount", "client_rating",
-                "client_projects_amount", "developer_skill_level", "developer_tags"));
+                "client_projects_amount", "developer_skill_level", "developer_tags", "developer_id"));
         try {
             Map<String, Object> user = userService.getCurrentUser(fields);
             model.addAttribute("user", user);
@@ -59,6 +59,15 @@ public class ProfileController {
     public String iDeveloping(Model model) {
         Set<String> fields = new HashSet<>(Arrays.asList("id", "name", "status", "min_skill_level",
                 "developer_rating", "client_rating", "tags", "developer_id", "client_id"));
+
+        try {
+            Map<String, Object> user = userService.getCurrentUser(new HashSet<>(Arrays.asList("developer_id")));
+            model.addAttribute("user", user);
+        } catch (AuthRequiredException e) {
+            e.printStackTrace();
+        }
+
+
         try {
             List<Map<String, Object>> myProjects = projectService.getCurrentUserProjectsDeveloping(fields);
 

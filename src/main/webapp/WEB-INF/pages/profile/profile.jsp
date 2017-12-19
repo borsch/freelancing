@@ -26,6 +26,9 @@
                     <p><strong>Client rating: </strong>${user.client_rating}</p>
                     <p><strong>Client projects amount: </strong>${user.client_projects_amount}</p>
                 </div>
+                <div class="text-center">
+                    <a href="/projects/find?developer_id=${user.developer_id}"><button class="btn-theme btn-2">Search projects for me</button></a>
+                </div>
             </div>
             <div class="col-sm-3 col-sm-pull-9">
                 <jsp:include page="user_menu.jsp" />

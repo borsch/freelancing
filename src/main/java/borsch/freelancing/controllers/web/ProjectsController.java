@@ -1,6 +1,8 @@
 package borsch.freelancing.controllers.web;
 
 import borsch.freelancing.exceptions.BaseException;
+import borsch.freelancing.pojo.enums.SkillLevelEnum;
+import borsch.freelancing.services.developers.IDeveloperService;
 import borsch.freelancing.services.projects.IProjectService;
 import borsch.freelancing.services.users.IUserService;
 import borsch.freelancing.services.utils.SessionUtils;
@@ -11,9 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +36,9 @@ public class ProjectsController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IDeveloperService developerService;
+
     @RequestMapping(value = { "/", "" }, method = RequestMethod.GET)
     public String projects() {
         return "projects/projects";
@@ -41,6 +48,35 @@ public class ProjectsController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create() {
         return "projects/create";
+    }
+
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    public String findProjects(
+            @RequestParam("developer_id") int developerId,
+            Model model
+    ) {
+        try {
+            Map<String, Object> developer = developerService.getById(developerId, new HashSet<>(Arrays.asList(
+                "id", "skill_level", "tags", "user_name", "rating"
+            )));
+
+            model.addAttribute("developer", developer);
+
+            SkillLevelEnum level = (SkillLevelEnum)developer.get("skill_level");
+            List<String> tags = (List<String>) developer.get("tags");
+
+            try {
+                List<Map<String, Object>> projects = projectService.suggestProjects(level, tags, new HashSet<>(Arrays.asList(
+                        "id", "min_skill_level", "tags", "name"
+                )));
+
+                model.addAttribute("projects", projects);
+            } catch (BaseException e) { }
+        } catch (BaseException e) {
+            return "redirect:/profile/my_projects";
+        }
+
+        return "projects/find";
     }
 
     @RequestMapping(value = "/{id}/view", method = RequestMethod.GET)

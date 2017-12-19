@@ -2,6 +2,7 @@ package borsch.freelancing.services.projects;
 
 import borsch.freelancing.exceptions.BaseException;
 import borsch.freelancing.pojo.entities.ProjectEntity;
+import borsch.freelancing.pojo.enums.SkillLevelEnum;
 import borsch.freelancing.pojo.view.ProjectView;
 import borsch.freelancing.services.BaseService;
 
@@ -21,4 +22,5 @@ public abstract class IProjectService extends BaseService<ProjectEntity, Project
 
     public abstract List<Map<String, Object>> getCurrentUserProjectsDeveloping(Set<String> fields) throws BaseException;
 
+    public abstract List<Map<String, Object>> suggestProjects(SkillLevelEnum level, List<String> tags, Set<String> fields) throws BaseException;
 }
